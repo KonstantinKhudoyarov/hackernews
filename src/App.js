@@ -62,12 +62,14 @@ class App extends React.Component {
     const {searchTerm, list} = this.state;
 
     return (
-      <div className="App">
-        <Search
-          value={searchTerm}
-          onChange={this.onSearchChange}>
-            Поиск
-        </Search>
+      <div className="page">
+        <div className="interactions">
+          <Search
+            value={searchTerm}
+            onChange={this.onSearchChange}>
+              Поиск
+          </Search>
+        </div>
         <Table
           list={list}
           pattern={searchTerm}
@@ -98,10 +100,10 @@ class Table extends React.Component {
     const {list, pattern, onDismiss} = this.props;
 
     return(
-      <div>
+      <div className="table">
         {list.filter(isSearched(pattern)).map(item => {
         return (
-          <div key={item.objectID}>
+          <div key={item.objectID} className="table-row">
             <span>
               <a href={item.url}>{item.title}</a>
             </span>
@@ -111,6 +113,7 @@ class Table extends React.Component {
             <span>
               <Button
                 onClick={() => onDismiss(item.objectID)}
+                className="button-inline"
               >
                 Удалить
               </Button>

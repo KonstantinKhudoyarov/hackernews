@@ -88,6 +88,8 @@
   -webkit-font-smoothing: inherit;
   padding: 0;
   font-size: inherit;
+  font-weight: bold;
+  color: red;
   cursor: pointer;
 }
   
