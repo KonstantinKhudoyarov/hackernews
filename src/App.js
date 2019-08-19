@@ -1,6 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import ContentLoader from "react-content-loader";
+
+class CustomLoader extends React.Component {
+  render() {
+    return (
+      <ContentLoader>
+        <rect x="0" y="10" rx="3" ry="3" width="350" height="4" />
+        <rect x="0" y="17" rx="3" ry="3" width="350" height="4" />
+        <rect x="0" y="24" rx="3" ry="3" width="350" height="4" />
+        <rect x="0" y="31" rx="3" ry="3" width="350" height="4" />
+        <rect x="0" y="38" rx="3" ry="3" width="350" height="4" />
+        <rect x="0" y="45" rx="3" ry="3" width="350" height="4" />
+      </ContentLoader>
+    );
+  }
+}
 
 function isSearched(searchTerm) {
   return function (item) {
@@ -45,8 +60,10 @@ class App extends React.Component {
 
   onDismiss(id) {
     const isNotId = item => item.objectID != id;
-    const updatedList = this.state.list.filter(isNotId);
-    this.setState({ list: updatedList });
+    const updatedList = this.state.list.hits.filter(isNotId);
+    this.setState({
+      list: { ...this.state.list, hits: updatedList }
+    });
   }
 
   onSearchChange(event) {
@@ -55,8 +72,6 @@ class App extends React.Component {
 
   render() {
     const { searchTerm, list } = this.state;
-
-    if (!list) { return null; }
 
     return (
       <div className="page">
@@ -67,11 +82,16 @@ class App extends React.Component {
             Поиск
           </Search>
         </div>
-        <Table
-          list={list.hits}
-          pattern={searchTerm}
-          onDismiss={this.onDismiss}
-        />
+        {!list
+          ?
+          <CustomLoader />
+          :
+          <Table
+            list={list.hits}
+            pattern={searchTerm}
+            onDismiss={this.onDismiss}
+          />
+        }
       </div>
     );
   }
