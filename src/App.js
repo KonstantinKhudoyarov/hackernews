@@ -1,5 +1,5 @@
 import React from 'react';
-import './App.css';
+import './App.scss';
 import ContentLoader from "react-content-loader";
 
 class CustomLoader extends React.Component {
